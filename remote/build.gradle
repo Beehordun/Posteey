@@ -1,0 +1,40 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // data module
+    implementation project(':data')
+
+    // Kotlin
+    implementation rootProject.libs.kotlinStdlibJdk7
+
+    // Dagger
+    implementation rootProject.libs.dagger
+    kapt rootProject.libs.daggerCompiler
+    compileOnly rootProject.libs.jsrAnnotation
+
+    // Okhttp & Retrofit
+    implementation rootProject.libs.okhttp
+    implementation rootProject.libs.loggingInterceptor
+    implementation rootProject.libs.okhttpUrlConnection
+    implementation rootProject.libs.retrofit
+
+    // JSON parsing
+    implementation rootProject.libs.gson
+    implementation rootProject.libs.gsonConverter
+    implementation rootProject.libs.gsonScalarConverter
+
+    // Coroutines
+    implementation rootProject.libs.coroutine
+
+    // Test dependencies
+    testImplementation rootProject.libs.junit
+    testImplementation rootProject.libs.mockitoCore
+    testImplementation rootProject.libs.mockitoKotlin
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
