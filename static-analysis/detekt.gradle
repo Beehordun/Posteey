@@ -1,0 +1,12 @@
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+    config = files("$rootDir/static-analysis/default-detekt-config.yml")
+
+    reports {
+        html {
+            enabled = true
+            destination = file("$rootDir/static-analysis/reports/report.html")
+        }
+    }
+}
