@@ -23,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 dependencies {
@@ -49,6 +54,10 @@ dependencies {
 
     // Test dependencies
     testImplementation rootProject.libs.junit
+    testImplementation rootProject.libs.testRunner
+    testImplementation rootProject.libs.testRules
+    testImplementation rootProject.libs.robolectric
+    testImplementation rootProject.libs.testCore
     testImplementation rootProject.libs.mockitoCore
     testImplementation rootProject.libs.mockitoKotlin
     testImplementation rootProject.libs.roomTesting
