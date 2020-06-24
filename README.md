@@ -14,7 +14,10 @@ App uses the Room Database
 App uses ktlint and detekt 
 
 ## Libraries
-RxJava, Dagger2, Room, LiveData, ViewModel, Coroutines, and Junit e.t.c
+Dagger2, Room, LiveData, ViewModel, Coroutines, and Junit e.t.c
+
+## Monitoring Network State
+Monitor network state using Connectivity Manager callbacks and LiveData
 
 ## Tests
 Unit tested the cache, remote and data layers
