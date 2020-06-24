@@ -1,4 +1,4 @@
-package com.example.posteey.features
+package com.example.posteey.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.presentation.models.NewsArticle

@@ -9,6 +9,10 @@ class GetGeneralNewsUseCase @Inject constructor(
 ) {
 
     suspend fun getGeneralNews(query: Map<String, String>, pageSize: Int, page: Int): NewsResult {
-        return generalNewsRepository.getGeneralNews(query, pageSize, page)
+        return generalNewsRepository.getGeneralNews(query, pageSize, page).also {
+            it.articles.map {
+                println("Log--> ${it.title.substring(0..13)}")
+            }
+        }
     }
 }

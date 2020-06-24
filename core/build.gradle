@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+    // Kotlin
+    implementation rootProject.libs.kotlinStdlibJdk7
+
+    implementation rootProject.libs.lifecycle
+    implementation rootProject.libs.coreKtx
+
+    // Okhttp & Retrofit
+    implementation rootProject.libs.okhttp
+    implementation rootProject.libs.loggingInterceptor
+    implementation rootProject.libs.okhttpUrlConnection
+    implementation rootProject.libs.retrofit
+
+    // Android Test dependencies
+    androidTestImplementation rootProject.libs.junit
+    androidTestImplementation rootProject.libs.testRunner
+    androidTestImplementation rootProject.libs.testRules
+    androidTestImplementation rootProject.libs.testCore
+}

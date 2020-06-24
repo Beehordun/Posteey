@@ -34,7 +34,7 @@ class RemoteDataSourceImplTest {
         runBlocking {
             val returnedNewsEntity = remoteDataSourceImpl.getNewsHeadlines(query, pageSize, page)
 
-            Assert.assertEquals(newsResultEntity.totalResult, returnedNewsEntity.totalResult)
+            Assert.assertEquals(newsResultEntity.totalResults, returnedNewsEntity.totalResults)
             Assert.assertEquals(newsResultEntity.articles, returnedNewsEntity.articles)
         }
     }
@@ -48,7 +48,7 @@ class RemoteDataSourceImplTest {
         runBlocking {
             val returnedNewsEntity = remoteDataSourceImpl.searchNews(query, pageSize, page)
 
-            Assert.assertEquals(newsResultEntity.totalResult, returnedNewsEntity.totalResult)
+            Assert.assertEquals(newsResultEntity.totalResults, returnedNewsEntity.totalResults)
             Assert.assertEquals(newsResultEntity.articles, returnedNewsEntity.articles)
         }
     }

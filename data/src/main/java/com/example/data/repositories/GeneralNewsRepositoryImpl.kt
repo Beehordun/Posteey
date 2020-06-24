@@ -26,6 +26,9 @@ class GeneralNewsRepositoryImpl @Inject constructor(
                     generalNewsDataSource.clearGeneralNews()
                 }
                 generalNewsDataSource.insertGeneralNews(it)
+
+                //newsResultEntityMapper.mapFromNewsResultEntity(it)
+
                 newsResultEntityMapper.mapFromNewsResultEntity(
                     generalNewsDataSource.getGeneralNews()
                 )

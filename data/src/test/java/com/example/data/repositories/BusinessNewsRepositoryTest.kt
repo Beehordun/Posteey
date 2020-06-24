@@ -25,6 +25,4 @@ class BusinessNewsRepositoryTest {
             newsResultEntityMapper
         )
     }
-
-
 }

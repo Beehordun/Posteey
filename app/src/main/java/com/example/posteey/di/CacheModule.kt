@@ -1,15 +1,11 @@
 package com.example.posteey.di
 
-import android.content.Context
 import com.biodun.cache.datasources.*
-import com.biodun.cache.db.NewsResultDatabase
 import com.example.data.cache.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)

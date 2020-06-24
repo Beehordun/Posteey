@@ -10,14 +10,14 @@ object FakesFactory {
 
     fun getFakeRemoteNewsResult(): RemoteNewsResult {
         return RemoteNewsResult(
-            totalResult = 23,
+            totalResults = 23,
             remoteArticles = listOf(getFakeRemoteArticle())
         )
     }
 
     fun getFakeNewsResultEntity(): NewsResultEntity {
         return NewsResultEntity(
-            totalResult = 23,
+            totalResults = 23,
             articles = listOf(getFakeArticleEntity())
         )
     }

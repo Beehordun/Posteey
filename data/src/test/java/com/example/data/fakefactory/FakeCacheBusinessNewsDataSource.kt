@@ -4,7 +4,7 @@ import com.example.data.cache.CacheBusinessNewsDataSource
 import com.example.data.model.ArticleEntity
 import com.example.data.model.NewsResultEntity
 
-class FakeCacheBusinessNewsDataSource(): CacheBusinessNewsDataSource {
+class FakeCacheBusinessNewsDataSource : CacheBusinessNewsDataSource {
 
     private val allNewsArticles: MutableList<ArticleEntity> = mutableListOf()
     private val newsResultEntity = NewsResultEntity(totalResults = 10, articles = allNewsArticles)

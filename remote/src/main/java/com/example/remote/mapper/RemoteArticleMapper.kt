@@ -9,13 +9,13 @@ class RemoteArticleMapper @Inject constructor() {
     fun mapRemoteArticleToArticleEntity(remoteArticle: RemoteArticle): ArticleEntity {
         return ArticleEntity(
             sourceName = remoteArticle.remoteSource.name,
-            author = remoteArticle.author,
-            title = remoteArticle.title,
-            description = remoteArticle.description,
-            url = remoteArticle.url,
-            urlToImage = remoteArticle.urlToImage,
-            publishedAt = remoteArticle.publishedAt,
-            content = remoteArticle.content
+            author = remoteArticle.author ?: "",
+            title = remoteArticle.title ?: "",
+            description = remoteArticle.description ?: "",
+            url = remoteArticle.url ?: "",
+            urlToImage = remoteArticle.urlToImage ?: "",
+            publishedAt = remoteArticle.publishedAt ?: "",
+            content = remoteArticle.content ?: ""
         )
     }
 }
