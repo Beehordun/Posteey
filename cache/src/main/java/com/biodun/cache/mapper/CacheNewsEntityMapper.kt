@@ -24,14 +24,14 @@ class CacheNewsEntityMapper @Inject constructor() {
                     content = it.content
                 )
             }
-            return NewsResultEntity(totalResult = totalResult, articles = articleEntities)
+            return NewsResultEntity(totalResults = totalResult, articles = articleEntities)
         }
 
         throw NoDatabaseDataFoundException(DATA_NOT_FOUND)
     }
 
     fun mapToCache(newsResultEntity: NewsResultEntity, newsType: String): List<CacheNewsEntity> {
-        val totalResults = newsResultEntity.totalResult
+        val totalResults = newsResultEntity.totalResults
         return newsResultEntity.articles.map {
             CacheNewsEntity(
                 sourceName = it.sourceName,

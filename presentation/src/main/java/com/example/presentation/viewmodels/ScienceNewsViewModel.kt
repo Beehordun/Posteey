@@ -1,5 +1,6 @@
 package com.example.presentation.viewmodels
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,11 +14,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ScienceNewsViewModel @Inject constructor(
+class ScienceNewsViewModel @ViewModelInject constructor(
     private val getScienceNewsUseCase: GetScienceNewsUseCase,
     private val newsArticleMapper: NewsArticleMapper
 ) : ViewModel() {
 
+    var pageNumber = 1
     var totalResults: Int = 0
     private var _scienceNewsLiveData = MutableLiveData<ViewState<List<NewsArticle>>>()
     var scienceNewsLiveData: LiveData<ViewState<List<NewsArticle>>> = _scienceNewsLiveData
@@ -30,7 +32,7 @@ class ScienceNewsViewModel @Inject constructor(
 
         val query = QueryBuilder.buildQuery(category, country)
 
-        _scienceNewsLiveData.postValue(Loading())
+        _scienceNewsLiveData.postValue(ViewState.Loading())
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -39,17 +41,20 @@ class ScienceNewsViewModel @Inject constructor(
                 }.onSuccess {
                     totalResults = it.totalResults
                     val newsArticleList = newsArticleMapper.mapFromDomainToPresentation(it)
-                    _scienceNewsLiveData.postValue(Success(newsArticleList))
+                    _scienceNewsLiveData.postValue(ViewState.Success(newsArticleList))
                 }.onFailure {
-                    _scienceNewsLiveData.postValue(Error(""))
+                    _scienceNewsLiveData.postValue(ViewState.Error(""))
                 }
             }
         }
     }
 
-    fun loadMoreScienceNews(country: Country, currentPage: Int) {
-        if (currentPage * DEFAULT_PAGE_SIZE < totalResults && _scienceNewsLiveData.value !is Loading<*>) {
-            getScienceNews(country = country, page = currentPage + 1)
+    fun loadMoreScienceNews(currentPage: Int) {
+        if (currentPage * DEFAULT_PAGE_SIZE < totalResults &&
+            _scienceNewsLiveData.value !is ViewState.Loading &&
+                pageNumber == currentPage) {
+            getScienceNews(page = currentPage + 1)
+            pageNumber += 1
         }
     }
 }

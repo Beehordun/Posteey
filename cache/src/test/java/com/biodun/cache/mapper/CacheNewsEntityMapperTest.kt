@@ -16,7 +16,7 @@ class CacheNewsEntityMapperTest {
 
     @Before
     fun setUp() {
-        cachedBusinessNewsEntityList = FakeCacheTestFactory.makeBusinessNewsList()
+        cachedBusinessNewsEntityList = FakeCacheTestFactory.makeNewsList(BUSINESS_NEWS)
         newsResultEntity = FakeCacheTestFactory.makeNewsResultEntity()
         cacheNewsEntityMapper = CacheNewsEntityMapper()
     }
@@ -27,11 +27,23 @@ class CacheNewsEntityMapperTest {
             cacheNewsEntityMapper.mapFromCache(cachedBusinessNewsEntityList)
 
         assertEquals(returnedNewsResultEntity.articles.size, cachedBusinessNewsEntityList.size)
-        assertEquals(returnedNewsResultEntity.articles[0].sourceName, cachedBusinessNewsEntityList[0].sourceName)
-        assertEquals(returnedNewsResultEntity.articles[0].title, cachedBusinessNewsEntityList[0].title)
-        assertEquals(returnedNewsResultEntity.articles[0].content, cachedBusinessNewsEntityList[0].content)
+        assertEquals(
+            returnedNewsResultEntity.articles[0].sourceName,
+            cachedBusinessNewsEntityList[0].sourceName
+        )
+        assertEquals(
+            returnedNewsResultEntity.articles[0].title,
+            cachedBusinessNewsEntityList[0].title
+        )
+        assertEquals(
+            returnedNewsResultEntity.articles[0].content,
+            cachedBusinessNewsEntityList[0].content
+        )
         assertEquals(returnedNewsResultEntity.articles[0].url, cachedBusinessNewsEntityList[0].url)
-        assertEquals(returnedNewsResultEntity.articles[0].urlToImage, cachedBusinessNewsEntityList[0].urlToImage)
+        assertEquals(
+            returnedNewsResultEntity.articles[0].urlToImage,
+            cachedBusinessNewsEntityList[0].urlToImage
+        )
     }
 
     @Test
@@ -40,10 +52,23 @@ class CacheNewsEntityMapperTest {
             cacheNewsEntityMapper.mapToCache(newsResultEntity, newsType = BUSINESS_NEWS)
 
         assertEquals(returnedCachedBusinessNewsEntity.size, cachedBusinessNewsEntityList.size)
-        assertEquals(returnedCachedBusinessNewsEntity[0].content, cachedBusinessNewsEntityList[0].content)
-        assertEquals(returnedCachedBusinessNewsEntity[0].sourceName, cachedBusinessNewsEntityList[0].sourceName)
-        assertEquals(returnedCachedBusinessNewsEntity[0].title, cachedBusinessNewsEntityList[0].title)
+        assertEquals(
+            returnedCachedBusinessNewsEntity[0].content,
+            cachedBusinessNewsEntityList[0].content
+        )
+        assertEquals(
+            returnedCachedBusinessNewsEntity[0].sourceName,
+            cachedBusinessNewsEntityList[0].sourceName
+        )
+        assertEquals(
+            returnedCachedBusinessNewsEntity[0].title,
+            cachedBusinessNewsEntityList[0].title
+        )
         assertEquals(returnedCachedBusinessNewsEntity[0].url, cachedBusinessNewsEntityList[0].url)
-        assertEquals(returnedCachedBusinessNewsEntity[0].urlToImage, cachedBusinessNewsEntityList[0].urlToImage)
+        assertEquals(
+            returnedCachedBusinessNewsEntity[0].urlToImage,
+            cachedBusinessNewsEntityList[0].urlToImage
+        )
     }
 }
+

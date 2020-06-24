@@ -19,7 +19,7 @@ class RemoteNewsResultMapperTest {
         val returnedNewsResultEntity: NewsResultEntity =
             remoteNewsResultMapper.mapRemoteNewsResultToNewsResultEntity(remoteNewsResult)
 
-        assertEquals(newsResultEntity.totalResult, returnedNewsResultEntity.totalResult)
+        assertEquals(newsResultEntity.totalResults, returnedNewsResultEntity.totalResults)
         assertEquals(newsResultEntity.articles, returnedNewsResultEntity.articles)
     }
 }

@@ -2,11 +2,15 @@ package com.biodun.cache.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.biodun.cache.dao.NewsResultDao
-import com.biodun.cache.model.CacheNewsResultEntity
-import javax.inject.Inject
+import androidx.room.TypeConverters
+import com.biodun.cache.dao.NewsDao
+import com.biodun.cache.db.DbConstants.DB_VERSION
+import com.biodun.cache.model.CacheNewsEntity
 
-@Database(entities = [CacheNewsResultEntity::class], version = 1)
-abstract class NewsResultDatabase @Inject constructor(): RoomDatabase() {
-    abstract fun newsResultDao(): NewsResultDao
+@TypeConverters(UUIDTypeConverter::class)
+@Database(
+    entities = [CacheNewsEntity::class], version = DB_VERSION, exportSchema = false
+)
+abstract class NewsResultDatabase : RoomDatabase() {
+    abstract fun newsDao(): NewsDao
 }

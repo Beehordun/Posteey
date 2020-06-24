@@ -14,7 +14,7 @@ class RemoteNewsResultMapper @Inject constructor(
         remoteNewsResult: RemoteNewsResult
     ): NewsResultEntity {
         return NewsResultEntity(
-            totalResult = remoteNewsResult.totalResult,
+            totalResults = remoteNewsResult.totalResults,
             articles = mapRemoteArticleList(remoteNewsResult.remoteArticles)
         )
     }

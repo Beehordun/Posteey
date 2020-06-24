@@ -12,7 +12,7 @@ class AuthInterceptor @Inject constructor(
         val original: Request = chain.request()
 
         val request: Request = original.newBuilder()
-            .header("x-api-key", "744e10a246a040b6a50d4acb2044478c")
+            .header("x-api-key", "")
             .method(original.method(), original.body())
             .build()
 

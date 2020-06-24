@@ -1,56 +1,88 @@
 package com.example.posteey.features
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.posteey.NewsDetailActivity
 import com.example.posteey.R
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.posteey.adapter.NewsAdapter
+import com.example.posteey.adapter.RecyclerViewPaginator
+import com.example.posteey.utils.clearShimmer
+import com.example.posteey.utils.displayShimmer
+import com.example.presentation.models.NewsArticle
+import com.example.presentation.utils.Country
+import com.example.presentation.utils.ViewState
+import com.example.presentation.viewmodels.EntertainmentNewsViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_base_news.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EntertainmentNewsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class EntertainmentNewsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+@AndroidEntryPoint
+class EntertainmentNewsFragment : BaseNewsFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private val entertainmentNewsViewModel: EntertainmentNewsViewModel by viewModels()
+    private lateinit var newsAdapter: NewsAdapter
+    private val entertainmentNewsArticles: MutableList<NewsArticle> = mutableListOf()
+    private val owner = { lifecycle }
+    private val recyclerViewPaginator by lazy {
+        object : RecyclerViewPaginator(recycler_view) {
+            override fun loadMore(currentPage: Int) {
+                entertainmentNewsViewModel.loadMoreEntertainmentNews(currentPage)
+            }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_entertainment_news, container, false)
+    override val layoutId: Int
+        get() = R.layout.fragment_base_news
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState == null) {
+            entertainmentNewsViewModel.getEntertainmentNews(page = 1, country = Country.US)
+        }
+
+        observeViewModel()
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        newsAdapter = NewsAdapter(entertainmentNewsArticles, requireContext())
+        newsAdapter.setNewsArticleClickListener {
+            startActivity(NewsDetailActivity.getIntent(this.requireContext(), it))
+        }
+        recycler_view.adapter = newsAdapter
+        recycler_view.layoutManager = LinearLayoutManager(requireContext())
+        recycler_view.addOnScrollListener(recyclerViewPaginator as RecyclerViewPaginator)
+    }
+
+    private fun observeViewModel() {
+        entertainmentNewsViewModel.entertainmentNewsLiveData.observe(owner) { viewState ->
+            when(viewState) {
+                is ViewState.Loading -> {
+                    if (entertainmentNewsViewModel.pageNumber > 1) {
+                        load_more_progress.visibility = View.VISIBLE
+                    } else {
+                        shimmer_view_container.displayShimmer()
+                    }
+                }
+                is ViewState.Success -> {
+                    load_more_progress.visibility = View.GONE
+                    shimmer_view_container.clearShimmer()
+                    val state = recycler_view.layoutManager?.onSaveInstanceState()
+                    newsAdapter.updateItems(viewState.data)
+                    recycler_view.layoutManager?.onRestoreInstanceState(state)
+                }
+                is ViewState.Error -> {
+                    load_more_progress.visibility = View.GONE
+                    shimmer_view_container.clearShimmer()
+                }
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EntertainmentNewsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                EntertainmentNewsFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+        @JvmStatic
+        fun newInstance() = EntertainmentNewsFragment()
     }
 }

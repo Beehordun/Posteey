@@ -1,5 +1,6 @@
 package com.example.presentation.viewmodels
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,17 +8,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.usecases.GetSportsNewsUseCase
 import com.example.presentation.mappers.NewsArticleMapper
 import com.example.presentation.models.NewsArticle
-import com.example.presentation.utils.*
+import com.example.presentation.utils.Country
+import com.example.presentation.utils.NewsCategory
+import com.example.presentation.utils.QueryBuilder
+import com.example.presentation.utils.ViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class SportsNewsViewModel @Inject constructor(
+class SportsNewsViewModel @ViewModelInject constructor(
     private val getSportsNewsUseCase: GetSportsNewsUseCase,
     private val newsArticleMapper: NewsArticleMapper
 ) : ViewModel() {
 
+    var pageNumber = 1
     var totalResults: Int = 0
     private var _sportsNewsLiveData = MutableLiveData<ViewState<List<NewsArticle>>>()
     var sportsNewsLiveData: LiveData<ViewState<List<NewsArticle>>> = _sportsNewsLiveData
@@ -30,7 +34,7 @@ class SportsNewsViewModel @Inject constructor(
 
         val query = QueryBuilder.buildQuery(category, country)
 
-        _sportsNewsLiveData.postValue(Loading())
+        _sportsNewsLiveData.postValue(ViewState.Loading())
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -39,17 +43,20 @@ class SportsNewsViewModel @Inject constructor(
                 }.onSuccess {
                     totalResults = it.totalResults
                     val newsArticleList = newsArticleMapper.mapFromDomainToPresentation(it)
-                    _sportsNewsLiveData.postValue(Success(newsArticleList))
+                    _sportsNewsLiveData.postValue(ViewState.Success(newsArticleList))
                 }.onFailure {
-                    _sportsNewsLiveData.postValue(Error(""))
+                    _sportsNewsLiveData.postValue(ViewState.Error(""))
                 }
             }
         }
     }
 
-    fun loadMoreSportsNews(country: Country, currentPage: Int) {
-        if (currentPage * DEFAULT_PAGE_SIZE < totalResults && _sportsNewsLiveData.value !is Loading<*>) {
-            getSportsNews(country = country, page = currentPage + 1)
+    fun loadMoreSportsNews(currentPage: Int) {
+        if (currentPage * DEFAULT_PAGE_SIZE < totalResults &&
+            _sportsNewsLiveData.value !is ViewState.Loading &&
+                pageNumber == currentPage) {
+            getSportsNews(page = currentPage + 1)
+            pageNumber += 1
         }
     }
 }

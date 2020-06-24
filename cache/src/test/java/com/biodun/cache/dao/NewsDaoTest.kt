@@ -38,28 +38,28 @@ class NewsDaoTest {
 
     @Test
     fun insertAllNews_whereNewsTypeIsBusiness() = runBlocking {
-        val news = FakeCacheTestFactory.makeNewsList()
+        val news = FakeCacheTestFactory.makeNewsList(DbConstants.BUSINESS_NEWS)
 
         newsDao.insertAllNews(news)
         val insertedBusinessNews = newsDao.getNews(DbConstants.BUSINESS_NEWS)
 
-        Assert.assertEquals(insertedBusinessNews.size, 2)
+        Assert.assertEquals(insertedBusinessNews.size, news.size)
     }
 
     @Test
     fun getNews_whereNewsTypeIsSport() = runBlocking{
-        val news = FakeCacheTestFactory.makeNewsList()
+        val news = FakeCacheTestFactory.makeNewsList(DbConstants.SPORTS_NEWS)
 
         newsDao.insertAllNews(news)
         val returnedNews = newsDao.getNews(DbConstants.SPORTS_NEWS)
 
-        Assert.assertEquals(returnedNews.size, 1)
+        Assert.assertEquals(returnedNews.size, news.size)
         Assert.assertEquals(returnedNews[0].newsType, DbConstants.SPORTS_NEWS)
     }
 
     @Test
     fun clearNews_whereNewsTypeIsBusiness() = runBlocking {
-        val news = FakeCacheTestFactory.makeNewsList()
+        val news = FakeCacheTestFactory.makeNewsList(DbConstants.BUSINESS_NEWS)
 
         newsDao.insertAllNews(news)
         newsDao.clearNews(DbConstants.BUSINESS_NEWS)

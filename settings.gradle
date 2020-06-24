@@ -1,0 +1,8 @@
+include ':core'
+include ':remote'
+include ':presentation'
+include ':domain'
+include ':data'
+include ':cache'
+rootProject.name='Posteey'
+include ':app'
