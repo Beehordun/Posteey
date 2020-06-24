@@ -1,6 +1,8 @@
 # Posteey
 A multi-module Android News app with offline capabilities
 
+![NewsList](news-list.png)  ![NewsDetails](news-details.png)
+
 ## Architecture
 The app uses the **Clean Architeture + MVVM** architectural pattern.
 
