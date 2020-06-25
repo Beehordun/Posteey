@@ -38,6 +38,7 @@ dependencies {
 
     // data module
     implementation project(':domain')
+    implementation project(':core')
 
     // Kotlin
     implementation rootProject.libs.kotlinStdlibJdk7

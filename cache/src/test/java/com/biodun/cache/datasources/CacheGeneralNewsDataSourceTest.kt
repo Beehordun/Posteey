@@ -9,7 +9,7 @@ import com.biodun.cache.db.NewsResultDatabase
 import com.biodun.cache.factory.FakeCacheTestFactory
 import com.biodun.cache.mapper.CacheNewsEntityMapper
 import com.example.data.cache.CacheGeneralNewsDataSource
-import com.example.data.exceptions.NoDatabaseDataFoundException
+import com.example.core.exceptions.NoDatabaseDataFoundException
 import com.example.data.model.NewsResultEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.*
@@ -67,7 +67,7 @@ class CacheGeneralNewsDataSourceTest {
         cacheGeneralNewsDataSource.clearGeneralNews()
 
 
-        expectedException.expect(NoDatabaseDataFoundException::class.java)
+        expectedException.expect(com.example.core.exceptions.NoDatabaseDataFoundException::class.java)
         expectedException.expectMessage(DbConstants.DATA_NOT_FOUND)
 
         cacheGeneralNewsDataSource.getGeneralNews()

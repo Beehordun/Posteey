@@ -1,11 +1,14 @@
 package com.example.posteey.di
 
-import com.example.posteey.utils.AuthInterceptor
+import android.content.Context
+import com.example.core.Interceptors.AuthInterceptor
+import com.example.core.Interceptors.NoInternetConnectionInterceptor
 import com.example.remote.NewsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,12 +39,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
         val loggerInterceptor = HttpLoggingInterceptor()
         loggerInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient.Builder()
             .callTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(NoInternetConnectionInterceptor(context))
             .addInterceptor(loggerInterceptor)
             .addInterceptor(AuthInterceptor())
             .build()

@@ -79,6 +79,20 @@ class GeneralNewsFragment : BaseNewsFragment() {
                 is ViewState.Error -> {
                     load_more_progress.visibility = GONE
                     shimmer_view_container.clearShimmer()
+
+                    when(viewState) {
+                        is ViewState.Error.ServerError -> {
+                            Toast.makeText(context,
+                                context?.getString(R.string.server_error_msg),
+                                Toast.LENGTH_SHORT).show()
+                        }
+
+                        is ViewState.Error.NoDatabaseDataError -> {
+                            Toast.makeText(context,
+                                context?.getString(R.string.no_data_msg),
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
         }

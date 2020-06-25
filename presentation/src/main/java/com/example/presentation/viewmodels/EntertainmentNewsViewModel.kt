@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.exceptions.NoDatabaseDataFoundException
+import com.example.core.exceptions.ServerErrorException
 import com.example.domain.usecases.GetEntertainmentNewsUseCase
 import com.example.presentation.mappers.NewsArticleMapper
 import com.example.presentation.models.NewsArticle
@@ -44,8 +46,16 @@ class EntertainmentNewsViewModel @ViewModelInject constructor(
                     totalResults = it.totalResults
                     val newsArticleList = newsArticleMapper.mapFromDomainToPresentation(it)
                     _entertainmentNewsLiveData.postValue(ViewState.Success(newsArticleList))
-                }.onFailure {
-                    _entertainmentNewsLiveData.postValue(ViewState.Error(""))
+                }.onFailure { exception ->
+                    when(exception) {
+                        is NoDatabaseDataFoundException -> {
+                            _entertainmentNewsLiveData.postValue(ViewState.Error.NoDatabaseDataError())
+                        }
+
+                        is ServerErrorException -> {
+                            _entertainmentNewsLiveData.postValue(ViewState.Error.ServerError())
+                        }
+                    }
                 }
             }
         }
