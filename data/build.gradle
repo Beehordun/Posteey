@@ -40,11 +40,9 @@ dependencies {
     // Kotlin
     implementation rootProject.libs.kotlinStdlibJdk7
 
-
-    //Dagger
-    implementation rootProject.libs.dagger
-    kapt rootProject.libs.daggerCompiler
-    compileOnly rootProject.libs.jsrAnnotation
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
 
     // JSON parsing
     implementation rootProject.libs.gson
