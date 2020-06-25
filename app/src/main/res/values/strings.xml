@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NEWS</string>
+    <string name="no_data_msg">No data, please turn on your internet</string>
+    <string name="server_error_msg">Ops! Please try again</string>
 </resources>

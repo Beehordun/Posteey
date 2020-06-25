@@ -1,8 +1,7 @@
 package com.biodun.cache.mapper
 
-import com.biodun.cache.db.DbConstants.DATA_NOT_FOUND
 import com.biodun.cache.model.CacheNewsEntity
-import com.example.data.exceptions.NoDatabaseDataFoundException
+import com.example.core.exceptions.NoDatabaseDataFoundException
 import com.example.data.model.ArticleEntity
 import com.example.data.model.NewsResultEntity
 import javax.inject.Inject
@@ -27,7 +26,7 @@ class CacheNewsEntityMapper @Inject constructor() {
             return NewsResultEntity(totalResults = totalResult, articles = articleEntities)
         }
 
-        throw NoDatabaseDataFoundException(DATA_NOT_FOUND)
+        throw NoDatabaseDataFoundException()
     }
 
     fun mapToCache(newsResultEntity: NewsResultEntity, newsType: String): List<CacheNewsEntity> {

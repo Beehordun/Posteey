@@ -1,10 +1,14 @@
 package com.example.data.repositories
 
+import com.example.core.exceptions.NoConnectivityException
+import com.example.core.exceptions.NoDatabaseDataFoundException
+import com.example.core.exceptions.ServerErrorException
 import com.example.data.cache.CacheEntertainmentNewsDataSource
 import com.example.data.mappers.NewsResultEntityMapper
 import com.example.data.remote.RemoteDataSource
 import com.example.domain.model.NewsResult
 import com.example.domain.repositories.EntertainmentNewsRepository
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class EntertainmentNewsRepositoryImpl @Inject constructor(
@@ -29,10 +33,29 @@ class EntertainmentNewsRepositoryImpl @Inject constructor(
                 newsResultEntityMapper.mapFromNewsResultEntity(entertainmentNewsDataSource.getEntertainmentNews())
 
             },
-            onFailure = {
-                newsResultEntityMapper.mapFromNewsResultEntity(
-                    entertainmentNewsDataSource.getEntertainmentNews()
-                )
-            })
+            onFailure = { exception ->
+                when (exception) {
+                    is NoConnectivityException -> {
+                        fetchDataFromDatabase()
+                    }
+                    is UnknownHostException -> {
+                        fetchDataFromDatabase()
+                    }
+                    else -> {
+                        throw ServerErrorException()
+                    }
+                }
+            }
+        )
+    }
+
+    private suspend fun fetchDataFromDatabase(): NewsResult {
+        return try {
+            newsResultEntityMapper.mapFromNewsResultEntity(
+                entertainmentNewsDataSource.getEntertainmentNews()
+            )
+        } catch (exception: NoDatabaseDataFoundException) {
+            throw NoDatabaseDataFoundException()
+        }
     }
 }

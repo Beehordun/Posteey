@@ -15,6 +15,7 @@
         android:id="@+id/network_state_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/no_internet_msg"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
