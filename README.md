@@ -16,7 +16,7 @@ App uses the Room Database
 App uses ktlint and detekt 
 
 ## Libraries
-Dagger2, Room, LiveData, ViewModel, Coroutines, and Junit e.t.c
+Dagger Hilt, Room, LiveData, ViewModel, Coroutines, and Junit e.t.c
 
 ## Monitoring Network State
 Monitor network state using Connectivity Manager callbacks and LiveData
