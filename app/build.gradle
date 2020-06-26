@@ -70,11 +70,6 @@ dependencies {
     // Kotlin
     implementation rootProject.libs.kotlinStdlibJdk7
 
-    //Dagger
-   /* implementation rootProject.libs.dagger
-    kapt rootProject.libs.daggerCompiler
-    compileOnly rootProject.libs.jsrAnnotation*/
-
     // Jetpack libraries
     implementation rootProject.libs.lifecycle
     implementation rootProject.libs.coreKtx
