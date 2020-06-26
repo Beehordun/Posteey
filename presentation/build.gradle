@@ -61,5 +61,4 @@ dependencies {
     androidTestImplementation rootProject.libs.testRunner
     androidTestImplementation rootProject.libs.testRules
     androidTestImplementation rootProject.libs.testCore
-
 }

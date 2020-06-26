@@ -5,13 +5,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.io.IOException
-import java.net.InetSocketAddress
-import java.net.Socket
-
-const val timeoutMs = 1500
-const val hostName = "8.8.4.4"
-const val port = 53
 
 object NetworkInformation {
 
