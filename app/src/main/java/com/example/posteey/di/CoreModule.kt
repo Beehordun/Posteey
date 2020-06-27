@@ -15,7 +15,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 object CoreModule {
 
     @Provides
-    private fun provideConnectivityCallback(@ApplicationContext context: Context): ConnectivityCallback {
+    internal fun provideConnectivityCallback(@ApplicationContext context: Context): ConnectivityCallback {
         return ConnectivityCallback(context)
     }
 
