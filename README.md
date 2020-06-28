@@ -22,4 +22,4 @@ Dagger Hilt, Room, LiveData, ViewModel, Coroutines, and Junit e.t.c
 Monitor network state using Connectivity Manager callbacks and LiveData
 
 ## Tests
-Unit tested the cache, remote and data layers
+Unit test
