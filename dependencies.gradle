@@ -84,6 +84,9 @@ ext {
                 // Coroutine
                 coroutine: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
 
+                // Facebook Shimmer
+                shimmer: "com.facebook.shimmer:shimmer:0.5.0",
+
                 // Room Db
                 roomRuntime: "androidx.room:room-runtime:$roomVersion",
                 roomKtx: "androidx.room:room-ktx:$roomVersion",

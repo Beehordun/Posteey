@@ -41,11 +41,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    internal fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
         val loggerInterceptor = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) Level.BODY else Level.NONE
         }
-        
+
         return OkHttpClient.Builder()
             .callTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(NoInternetConnectionInterceptor(context))
